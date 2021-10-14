@@ -119,6 +119,7 @@
                         <th>Player</th>
                         <th>Difficulty</th>
                         <th>Category</th>
+                        <th>Date</th>
                         <th>Score</th>
                     </tr>
                     @foreach ($highscores as $player)
@@ -179,6 +180,7 @@
                                     All
                                 @endif
                             </td>
+                            <td>{{ $player->created_at->diffForHumans() }}</td>
                             <td>{{ $player->score }}</td>
                         </tr>
                     @endforeach
