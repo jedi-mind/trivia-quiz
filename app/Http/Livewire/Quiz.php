@@ -15,8 +15,8 @@ class Quiz extends Component
     public $solution;
     public $question;
     public $score = 0;
-    public $quizStarted = true;
-    public $quizFinished = true;
+    public $quizStarted = false;
+    public $quizFinished = false;
     public $settingsOpen;
     public $numberOfQuestions = 10;
     public $difficulty;

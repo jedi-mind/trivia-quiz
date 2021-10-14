@@ -5,8 +5,8 @@
 @else
 
     @if (! $quizFinished)
-        {{-- timer --}}
         <div class="flex justify-between w-full py-10 mx-10">
+            {{-- timer --}}
             <div x-data="{ countdown: @entangle('timer') }" x-init="setInterval(function(){if(countdown > 0)countdown--;}, 1000);" class="flex justify-between w-48 text-gray-800 bg-gray-300 border-4 border-gray-500 rounded-lg h-28 text-8xl ">
                 <x-heroicon-o-clock class="w-14" />
                 <h1 x-text="countdown"></h1>
@@ -14,6 +14,7 @@
                     <div x-data x-init="$wire.emit('timeUp')"></div>
                 </template>
             </div>
+            {{-- score --}}
             <div class="flex items-center justify-between px-5 py-3 mr-20 text-gray-800 bg-gray-300 border-4 border-gray-500 rounded-lg w-52">
                 <x-heroicon-o-star class="w-14" />
                 <span class="text-6xl">{{ $score }}</span>
@@ -21,11 +22,13 @@
         </div>
 
         <div>
+            {{-- show current category and difficulty --}}
             <div class="mx-10 mt-10">
                 <span class="block">Category: {{ Arr::get($question, 'category') }}</span>
                 <span>Difficulty: {{ Arr::get($question, 'difficulty') }}</span>
             </div>
 
+            {{-- show question --}}
             <div class="flex items-center justify-center h-40 px-10 py-10 mx-10 mb-5 text-2xl text-center text-gray-800 bg-gray-300 border-4 border-gray-500 rounded-lg">
                 <p>
                     {!! Arr::get($question, 'question') !!}
@@ -34,7 +37,7 @@
 
             <div class="grid grid-cols-2 gap-2 mx-10 text-center text-gray-800 bg-gray-800 rounded-lg">
                 @if ($solution || $timer == 0)
-
+                    {{-- change color of answers when clicked or time is up --}}
                     @foreach (Arr::get($question, 'answers') as $answer)
                         <button class="py-5 flex border-4 border-gray-500 justify-around @if ($answer == Arr::get($question, 'correct_answer')) bg-green-500 @else bg-red-500 @endif rounded-lg">
                             @if ($solution == $answer)
@@ -48,7 +51,7 @@
                     @endforeach
 
                 @else
-
+                    {{-- loop over answers --}}
                     @foreach (Arr::get($question, 'answers') as $answer)
                         @if ($solution == $answer)
                             <x-heroicon-s-chevron-double-right class="w-5" />
@@ -65,17 +68,20 @@
 
             </div>
         </div>
-
+        {{-- next question button and question counter --}}
         <div class="flex flex-col w-56 mx-auto mt-10">
             <button class="px-10 py-5 font-bold text-gray-300 align-middle bg-blue-500 border border-blue-700 rounded-lg hover:bg-blue-700" wire:click='nextQuestion'>@if($questionIndex < $numberOfQuestions) Next Question @else Show Results @endif</button>
             <span class="text-center">Question {{ $questionIndex }} / {{ $numberOfQuestions }}</span>
         </div>
 
     @else
+        {{-- results - game finished --}}
         <div class="py-10 mx-10 text-gray-800 bg-gray-300 rounded-lg">
             <div class="py-10 text-xl text-center">
+                {{-- show score and how many questions played --}}
                 <h1 class="pb-3 text-2xl font-bold">You scored {{ $score }} Points in @if ($numberOfQuestions == 1) 1 Question @else {{ $numberOfQuestions }} Questions @endif!</h1>
                 <div>
+                    {{-- show settings --}}
                     <p class="pb-5 underline">
                         Your Settings:
                     </p>
@@ -89,11 +95,25 @@
             </div>
             <hr class="pb-5 border-gray-800">
             <div class="mb-20">
-                <div class="flex pb-5 mx-3">
+                {{-- enter player name to save highscore --}}
+
+                <div class="flex mx-3">
                     <input type="text" name="player" placeholder="Type in your name to save your Highscore!" wire:keydown.enter='store()' wire:model='player' class="w-full px-3 rounded-lg">
                     <button wire:click='store()' type="button" class="py-3 font-bold text-gray-200 bg-blue-500 border border-blue-700 rounded-lg px-7 hover:bg-blue-700">Save</button>
                 </div>
-                <table class="w-full text-center">
+                @error('player')
+                    <div class="absolute flex p-3 m-3 bg-red-300 rounded-lg top-20">
+                        {{ $message }}
+                    </div>
+                @enderror
+                @if (session()->has('message'))
+                    <div class="absolute flex p-3 m-3 bg-green-300 rounded-lg top-20">
+                        <x-heroicon-o-annotation  class="w-5 mr-5"/>
+                        {{ session('message') }}
+                    </div>
+                @endif
+                {{-- show highscores --}}
+                <table class="w-full mt-3 text-center">
                     <tr>
                         <th>Rank</th>
                         <th>Player</th>
@@ -164,7 +184,7 @@
                     @endforeach
                 </table>
             </div>
-
+            {{-- button play again --}}
             <div class="flex align-middle">
                 <button class="px-10 py-5 mx-auto font-bold text-gray-200 bg-blue-500 border border-blue-700 rounded-lg hover:bg-blue-700" wire:click='playAgain'>Play again!</button>
             </div>

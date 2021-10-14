@@ -1,11 +1,11 @@
 <div>
     <!-- <button @click="open = false" class="absolute right-0 font-bold">[x]</button> -->
     <h1 class="py-10 text-6xl text-center underline">Settings</h1>
-    <div class="px-10">
+    <div class="px-10 text-xl">
 
         {{-- set number of questions --}}
         <label for="amount">Number of Questions:</label>
-        <select name="numberOfQuestions" id="numberOfQuestions" wire:model='numberOfQuestions' class="w-full text-gray-800">
+        <select name="numberOfQuestions" id="numberOfQuestions" wire:model='numberOfQuestions' class="w-full py-2 mb-3 text-gray-800">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -60,7 +60,7 @@
 
         {{-- set difficulty --}}
         <label for="difficulty" class="mr-20">Difficulty:</label>
-        <select name="difficulty" id="difficulty" wire:model='difficulty' class="w-full text-gray-800">
+        <select name="difficulty" id="difficulty" wire:model='difficulty' class="w-full py-2 mb-3 text-gray-800">
             <option value="">Any</option>
             <option value="&difficulty=easy">Easy</option>
             <option value="&difficulty=medium">Medium</option>
@@ -69,7 +69,7 @@
 
         {{-- set category --}}
         <label for="category" class="mr-20">Category:</label>
-        <select name="category" id="category" wire:model='category' class="w-full text-gray-800">
+        <select name="category" id="category" wire:model='category' class="w-full py-2 mb-3 text-gray-800">
             <option value="">Any</option>
             <option value="&category=9">General Knowledge</option>
             <option value="&category=16">Entertainment: Board Games</option>
