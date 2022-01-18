@@ -49,7 +49,7 @@ class Quiz extends Component
     public function store()
     {
         $this->validate([
-            'player' => 'required',
+            'player' => ['required', 'min:3', 'max:12'],
         ]);
         Highscore::create([
             'player' => $this->player,
@@ -57,7 +57,7 @@ class Quiz extends Component
             'category' => $this->category ?? "All",
             'score' => $this->score,
         ]);
-        session()->flash('message', $this->player ? 'Highscore saved!' : '');
+        session()->flash('message', 'Highscore saved!');
         $this->resetCreateForm();
     }
 

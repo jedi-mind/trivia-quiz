@@ -94,26 +94,25 @@
                 </div>
             </div>
             <hr class="pb-5 border-gray-800">
-            <div class="mb-20">
+            <div class="mx-3 mb-20">
                 {{-- enter player name to save highscore --}}
-
-                <div class="flex mx-3">
+                <div class="flex pb-5">
                     <input type="text" name="player" placeholder="Type in your name to save your Highscore!" wire:keydown.enter='store()' wire:model='player' class="w-full px-3 rounded-lg">
                     <button wire:click='store()' type="button" class="py-3 font-bold text-gray-200 bg-blue-500 border border-blue-700 rounded-lg px-7 hover:bg-blue-700">Save</button>
                 </div>
                 @error('player')
-                    <div class="absolute flex p-3 m-3 bg-red-300 rounded-lg top-20">
+                    <div class="fixed flex p-3 m-3 bg-red-300 rounded-lg top-20">
                         {{ $message }}
                     </div>
                 @enderror
                 @if (session()->has('message'))
-                    <div class="absolute flex p-3 m-3 bg-green-300 rounded-lg top-20">
+                    <div class="fixed flex p-3 m-3 bg-green-300 rounded-lg top-20">
                         <x-heroicon-o-annotation  class="w-5 mr-5"/>
                         {{ session('message') }}
                     </div>
                 @endif
                 {{-- show highscores --}}
-                <table class="w-full mt-3 text-center">
+                <table class="w-full text-center border-4 border-gray-800 border-dashed">
                     <tr>
                         <th>Rank</th>
                         <th>Player</th>
@@ -123,7 +122,7 @@
                         <th>Score</th>
                     </tr>
                     @foreach ($highscores as $player)
-                        <tr>
+                        <tr class="hover:bg-gray-800 hover:text-gray-300">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $player->player }}</td>
                             <td>
